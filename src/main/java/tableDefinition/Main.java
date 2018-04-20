@@ -2,7 +2,7 @@ package tableDefinition;
 
 import java.sql.SQLException;
 
-public class DbHandler {
+public class Main {
     public static void main(String[] args) throws SQLException {
         ChainDefinition definition = new ChainDefinition(10, "Phones");
         definition.createChain();
