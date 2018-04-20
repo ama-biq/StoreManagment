@@ -43,12 +43,16 @@ public class GroupMallDefinition {
 
     }
     public int getMallGrp() throws SQLException {
-        int status =0;
+        int column =0;
         ConnectionToDb connObject = new ConnectionToDb();
         Connection connection = connObject.getConnection();
-        PreparedStatement preparedStatement = connection.prepareStatement("select * from mall_group");
-        ResultSet rs = preparedStatement.getResultSet();
-        return rs.getInt(1);
+        PreparedStatement preparedStatement = connection.prepareStatement("select * from mall_group where Group_Id = ?");
+        preparedStatement.setInt(1,4444);
+        ResultSet rs = preparedStatement.executeQuery();
+        if(rs.next()){
+            column=rs.getInt(1);
+        }
+        return column;
 
     }
     public int deleteMallGrp() throws SQLException {
