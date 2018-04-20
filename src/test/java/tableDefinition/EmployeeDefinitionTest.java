@@ -27,6 +27,17 @@ class EmployeeDefinitionTest {
         assertEquals(1, actual);
     }
 
+    @Test
+    public void getSpecificId() throws SQLException {
+        //prepare db
+        EmployeeDefinition definitionEmployee = new EmployeeDefinition(10,2, 21);
+        definitionEmployee.createEmployee();
+        //the test
+        int actual = definitionEmployee.getSpecificEmployee(10);
+        assertEquals(10, actual);
+
+    }
+
     @AfterEach
     private void afterEmployeeHandle() throws SQLException {
 

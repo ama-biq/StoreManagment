@@ -3,6 +3,7 @@ package tableDefinition;
 import java.lang.ref.PhantomReference;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class EmployeeDefinition {
@@ -71,6 +72,23 @@ public class EmployeeDefinition {
         } catch (SQLException e) {//todo handle exception
         }
         return status;
+
+    }
+
+    public int getSpecificEmployee(int specificEmployee) throws SQLException {
+        int column = 0;
+        try {
+            ConnectionToDb connObject = new ConnectionToDb();
+            Connection connection = connObject.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * from employee WHERE Employee_Id = ?");
+            preparedStatement.setInt(1, specificEmployee);
+            ResultSet rs = preparedStatement.executeQuery();
+            if (rs.next()) {
+                column = rs.getInt(1);
+            }
+        } catch (SQLException e) {//todo handle exception
+        }
+        return column;
 
     }
 }
