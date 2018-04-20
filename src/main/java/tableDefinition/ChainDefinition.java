@@ -9,6 +9,8 @@ public class ChainDefinition {
 
     private int chainId;
     private String category;
+    private ConnectionToDb connObject = new ConnectionToDb();
+
 
     public ChainDefinition() {
     }
@@ -36,35 +38,43 @@ public class ChainDefinition {
 
     public int createChain() throws SQLException {
         int status =0;
+        try{
         ConnectionToDb connObject = new ConnectionToDb();
         Connection connection = connObject.getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement("insert into chain(Chain_Id, Chain_Category) VALUES(?,?)");
         preparedStatement.setInt(1, chainId);
         preparedStatement.setString(2, category);
         status = preparedStatement.executeUpdate();
+        }catch (SQLException e){//todo handle exception
+        }
         return status;
 
     }
     public int getSpecificChain(int specificChain) throws SQLException {
         int column =0;
-        ConnectionToDb connObject = new ConnectionToDb();
+        try{
         Connection connection = connObject.getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement("SELECT * from chain WHERE Chain_Id = ?");
         preparedStatement.setInt(1, specificChain);
-        ResultSet rs = preparedStatement.executeQuery();
-        if(rs.next()){
-            column=rs.getInt(1);
-        }
+            ResultSet rs = preparedStatement.executeQuery();
+            if (rs.next()) {
+                column = rs.getInt(1);
+            }
+        }catch (SQLException e){//todo handle exception
+             }
         return column;
 
     }
     public int deleteSpecificChain(int specificChain) throws SQLException {
         int status =0;
+        try{
         ConnectionToDb connObject = new ConnectionToDb();
         Connection connection = connObject.getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement("delete from chain where Chain_Id=?");
         preparedStatement.setInt(1,specificChain);
         status = preparedStatement.executeUpdate();
+        }catch (SQLException e){//todo handle exception
+        }
         return status;
 
     }

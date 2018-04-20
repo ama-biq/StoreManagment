@@ -1,5 +1,9 @@
 package tableDefinition;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
 public class ShopDefinition {
 
     private int shopId;
@@ -61,4 +65,19 @@ public class ShopDefinition {
     public void setAddress(String address) {
         this.address = address;
     }
+
+//    public int createChain() throws SQLException {
+//        int status =0;
+//        try{
+//            ConnectionToDb connObject = new ConnectionToDb();
+//            Connection connection = connObject.getConnection();
+//            PreparedStatement preparedStatement = connection.prepareStatement("insert into shop(Shop_Id, Address, Chain_Id, Mall_Id, Mall_Shop_Id) VALUES(?,?,?,?,?)");
+//            preparedStatement.setInt(1, chainId);
+//            preparedStatement.setString(2, category);
+//            status = preparedStatement.executeUpdate();
+//        }catch (SQLException e){//todo handle exception
+//        }
+//        return status;
+
+   // }
 }
