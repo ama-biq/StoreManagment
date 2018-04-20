@@ -9,24 +9,19 @@ import java.sql.Statement;
 
 public class ConnectionToDb {
 
-    public  MysqlDataSource getDataSource(){
+    public  Connection getConnection() throws SQLException {
         MysqlDataSource ds = new MysqlDataSource();
         ds.setServerName("localhost");
         ds.setPortNumber(3305);
         ds.setDatabaseName("my_new_schema");
         ds.setUser("root");
         ds.setPassword("123456");
-        return ds;
-    }
-    public  Connection getNewConnection(String str) throws SQLException {
 
-        Connection conn = getDataSource().getConnection();
-        return conn;
-//        Statement stmt = conn.createStatement();
-//        ResultSet rs = stmt.executeQuery("SELECT version()");
-//        if (rs.next()) {
-//            System.out.println("Database Version : " + rs.getString(1));
-//        }
+        Connection conn = null;
+         conn = ds.getConnection();
+            return conn;
+
+
 
     }
 }

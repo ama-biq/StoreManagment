@@ -1,5 +1,10 @@
 package tableDefinition;
 
+import java.lang.ref.PhantomReference;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
 public class EmployeeDefinition {
 
     private int employeeId;
@@ -34,5 +39,20 @@ public class EmployeeDefinition {
 
     public void setChainId(int chainId) {
         this.chainId = chainId;
+    }
+
+    public int createEmployee() throws SQLException {
+        int status =0;
+
+        ConnectionToDb connObject = new ConnectionToDb();
+        Connection connection = connObject.getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement("insert into employee(Employee_Id, Shop_Id, Chain_Id) VALUES(?,?,?)");
+        preparedStatement.setInt(1, employeeId);
+        preparedStatement.setInt(2, shopId);
+        preparedStatement.setInt(3,chainId);
+        status = preparedStatement.executeUpdate();
+
+        return status;
+
     }
 }
