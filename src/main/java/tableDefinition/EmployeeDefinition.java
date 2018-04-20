@@ -17,6 +17,10 @@ public class EmployeeDefinition {
         this.chainId = chainId;
     }
 
+    public EmployeeDefinition() {
+
+    }
+
     public int getEmployeeId() {
         return employeeId;
     }
@@ -43,15 +47,29 @@ public class EmployeeDefinition {
 
     public int createEmployee() throws SQLException {
         int status =0;
+        try {
+            ConnectionToDb connObject = new ConnectionToDb();
+            Connection connection = connObject.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement("insert into employee(Employee_Id, Shop_Id, Chain_Id) VALUES(?,?,?)");
+            preparedStatement.setInt(1, employeeId);
+            preparedStatement.setInt(2, shopId);
+            preparedStatement.setInt(3, chainId);
+            status = preparedStatement.executeUpdate();
+        }catch (Exception e) {//todo handle exception
+        }
+        return status;
+    }
 
-        ConnectionToDb connObject = new ConnectionToDb();
-        Connection connection = connObject.getConnection();
-        PreparedStatement preparedStatement = connection.prepareStatement("insert into employee(Employee_Id, Shop_Id, Chain_Id) VALUES(?,?,?)");
-        preparedStatement.setInt(1, employeeId);
-        preparedStatement.setInt(2, shopId);
-        preparedStatement.setInt(3,chainId);
-        status = preparedStatement.executeUpdate();
-
+    public int deleteSpecificEmployee(int specificEmployee) throws SQLException {
+        int status = 0;
+        try {
+            ConnectionToDb connObject = new ConnectionToDb();
+            Connection connection = connObject.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement("delete from employee where Employee_Id=?");
+            preparedStatement.setInt(1, specificEmployee);
+            status = preparedStatement.executeUpdate();
+        } catch (SQLException e) {//todo handle exception
+        }
         return status;
 
     }

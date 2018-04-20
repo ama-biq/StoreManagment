@@ -24,13 +24,13 @@ class ChainDefinitionTest {
     }
     @Test
     public void insertChain() throws SQLException {
-        //after test db cleaning
-        emptyDefinition.deleteSpecificChain(21);
+     //prepare the db
+          emptyDefinition.deleteSpecificChain(21);
         ChainDefinition definition = new ChainDefinition(21,"Fox kids");
         //the test
         int actual = definition.createChain();
         //after test db cleaning
-        emptyDefinition.deleteSpecificChain(21);
+        definition.deleteSpecificChain(21);
         assertEquals(1, actual);
     }
     @Test
