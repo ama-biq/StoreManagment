@@ -9,6 +9,8 @@ import static org.junit.jupiter.api.Assertions.*;
 class ChainDefinitionTest {
     ChainDefinition emptyDefinition = new ChainDefinition();
 
+
+
     @Test
     public void getSpecificChain() throws SQLException {
 

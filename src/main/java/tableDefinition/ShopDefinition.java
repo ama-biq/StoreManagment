@@ -13,6 +13,10 @@ public class ShopDefinition {
     private int mallShopId;
     private String address;
 
+    private static final String getShopById = "SELECT * from shop WHERE Shop_Id = ?";
+    private static final String deleteShopById = "delete from shop where Shop_Id=?";
+    private static final String insertShopToTable = "insert into shop(Shop_Id, Address, Chain_Id, Mall_Id, Mall_Shop_Id) VALUES(?,?,?,?,?)";
+
     public ShopDefinition(int shopId, int chainId, int mallId, int mallShopId, String address) {
         this.shopId = shopId;
         this.address = address;
@@ -76,7 +80,7 @@ public class ShopDefinition {
         try {
             ConnectionToDb connObject = new ConnectionToDb();
             Connection connection = connObject.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement("insert into shop(Shop_Id, Address, Chain_Id, Mall_Id, Mall_Shop_Id) VALUES(?,?,?,?,?)");
+            PreparedStatement preparedStatement = connection.prepareStatement(insertShopToTable);
             preparedStatement.setInt(1, shopId);
             preparedStatement.setString(2, address);
             preparedStatement.setInt(3, chainId);
@@ -93,7 +97,7 @@ public class ShopDefinition {
         try {
             ConnectionToDb connObject = new ConnectionToDb();
             Connection connection = connObject.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement("delete from shop where Shop_Id=?");
+            PreparedStatement preparedStatement = connection.prepareStatement(deleteShopById);
             preparedStatement.setInt(1, specificShop);
             status = preparedStatement.executeUpdate();
         } catch (SQLException e) {//todo handle exception
@@ -107,7 +111,7 @@ public class ShopDefinition {
         try {
             ConnectionToDb connObject = new ConnectionToDb();
             Connection connection = connObject.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * from shop WHERE Shop_Id = ?");
+            PreparedStatement preparedStatement = connection.prepareStatement(getShopById);
             preparedStatement.setInt(1, specificShop);
             ResultSet rs = preparedStatement.executeQuery();
             if (rs.next()) {

@@ -6,6 +6,7 @@ public class MallDefinition {
     private String mallName;
     private String mallAddress;
 
+
     public MallDefinition(int mallId, String mallName, String mallAddress) {
         this.mallId = mallId;
         this.mallName = mallName;

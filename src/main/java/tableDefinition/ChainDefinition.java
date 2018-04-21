@@ -11,6 +11,10 @@ public class ChainDefinition {
     private String category;
     private ConnectionToDb connObject = new ConnectionToDb();
 
+    private static final String getChainById = "SELECT * from chain WHERE Chain_Id = ?";
+    private static final String deleteChainById = "delete from chain where Chain_Id=?";
+    private static final String insertChainToTable = "insert into chain(Chain_Id, Chain_Category) VALUES(?,?)";
+
 
     public ChainDefinition() {
     }
@@ -41,7 +45,7 @@ public class ChainDefinition {
         try{
         ConnectionToDb connObject = new ConnectionToDb();
         Connection connection = connObject.getConnection();
-        PreparedStatement preparedStatement = connection.prepareStatement("insert into chain(Chain_Id, Chain_Category) VALUES(?,?)");
+        PreparedStatement preparedStatement = connection.prepareStatement(insertChainToTable);
         preparedStatement.setInt(1, chainId);
         preparedStatement.setString(2, category);
         status = preparedStatement.executeUpdate();
@@ -54,7 +58,7 @@ public class ChainDefinition {
         int column =0;
         try{
         Connection connection = connObject.getConnection();
-        PreparedStatement preparedStatement = connection.prepareStatement("SELECT * from chain WHERE Chain_Id = ?");
+        PreparedStatement preparedStatement = connection.prepareStatement(getChainById);
         preparedStatement.setInt(1, specificChain);
             ResultSet rs = preparedStatement.executeQuery();
             if (rs.next()) {
@@ -70,7 +74,7 @@ public class ChainDefinition {
         try{
         ConnectionToDb connObject = new ConnectionToDb();
         Connection connection = connObject.getConnection();
-        PreparedStatement preparedStatement = connection.prepareStatement("delete from chain where Chain_Id=?");
+        PreparedStatement preparedStatement = connection.prepareStatement(deleteChainById);
         preparedStatement.setInt(1,specificChain);
         status = preparedStatement.executeUpdate();
         }catch (SQLException e){//todo handle exception
