@@ -1,9 +1,8 @@
 package tableDefinition;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ShopDefinition {
 
@@ -14,6 +13,7 @@ public class ShopDefinition {
     private String address;
 
     private static final String getShopById = "SELECT * from shop WHERE Shop_Id = ?";
+    private static final String getAllShopsByMall = "SELECT * FROM shop WHERE Mall_Id = ?";
     private static final String deleteShopById = "delete from shop where Shop_Id=?";
     private static final String insertShopToTable = "insert into shop(Shop_Id, Address, Chain_Id, Mall_Id, Mall_Shop_Id) VALUES(?,?,?,?,?)";
 
@@ -120,6 +120,33 @@ public class ShopDefinition {
         } catch (SQLException e) {//todo handle exception
         }
         return column;
+    }
 
+    public List<Integer> getAllShopInCertainMall(int specificMall) throws SQLException {
+        List<Integer> columnArrayList = new ArrayList<>();
+        try {
+            ConnectionToDb connObject = new ConnectionToDb();
+            Connection connection = connObject.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(getAllShopsByMall);
+            preparedStatement.setInt(1, specificMall);
+            ResultSet rs = preparedStatement.executeQuery();
+            ResultSet rsCopy = rs;
+            while(rs.next()) {
+                int i = 1;
+                //in while loop we run on the first column and insert its value to arraylist
+                //the values are the employee id
+                // i+3 - because there are 3 columns in table
+                while (i <= numberOfColumns(rsCopy)){
+                    columnArrayList.add(rs.getInt(1));
+                    i=i+5;
+                }
+            }
+        } catch (SQLException e) {//todo handle exception
+        }
+        return columnArrayList;
+    }
+    private int numberOfColumns(ResultSet resultSet) throws SQLException {
+        ResultSetMetaData metaData = resultSet.getMetaData();
+        return metaData.getColumnCount();
     }
 }

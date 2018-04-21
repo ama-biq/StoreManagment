@@ -96,7 +96,6 @@ public class EmployeeDefinition {
 
     public List<Integer> getAllEmployeeInChain(int specificChain) throws SQLException {
         List <Integer>columnArrayList = new ArrayList<>();
-        int arrayCounter=0;
         try {
             ConnectionToDb connObject = new ConnectionToDb();
             Connection connection = connObject.getConnection();
