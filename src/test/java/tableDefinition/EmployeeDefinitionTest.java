@@ -41,25 +41,16 @@ class EmployeeDefinitionTest {
 
     @Test
     public void getAllEmployeeOfCertainChain() throws SQLException {
+        EmployeeDefinition definitionEmployeesInChain = new EmployeeDefinition();
         List<Integer> expected = new ArrayList<>();
         expected.add(10);
         expected.add(11);
         expected.add(12);
         //prepare db
-        createThreeEmployees();
+        Main.createThreeEmployees();
         //the test
-        EmployeeDefinition definitionEmployeesInChain = new EmployeeDefinition();
         List<Integer> actual = definitionEmployeesInChain.getAllEmployeeInChain(21);
         assertTrue(expected.equals(actual));
-    }
-
-    private static void createThreeEmployees() throws SQLException {
-        EmployeeDefinition definitionEmployee = new EmployeeDefinition(10,2, 21);
-        definitionEmployee.createEmployee();
-        EmployeeDefinition definitionEmployee1 = new EmployeeDefinition(11,2, 21);
-        definitionEmployee1.createEmployee();
-        EmployeeDefinition definitionEmployee2 = new EmployeeDefinition(12,2, 21);
-        definitionEmployee2.createEmployee();
     }
 
     @AfterEach
