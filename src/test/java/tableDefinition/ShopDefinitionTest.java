@@ -72,10 +72,10 @@ class ShopDefinitionTest {
 
         ShopDefinition shopObjectUsedForQuery = new ShopDefinition();
 
-        ShopDefinition testedShopRecord1 = new ShopDefinition(333, 444, "Yaffo");
-        ShopDefinition testedShopRecord2 = new ShopDefinition(444, 444,"Yarka");
-        ShopDefinition testedShopRecord3 = new ShopDefinition(555, 444,"Omer");
-        ShopDefinition testedShopRecord4 = new ShopDefinition(666, 555,"Reim");
+        ShopDefinition testedShopRecord1 = new ShopDefinition(333, 444,444,223, "Yaffo");
+        ShopDefinition testedShopRecord2 = new ShopDefinition(444, 444,444,6565,"Yarka");
+        ShopDefinition testedShopRecord3 = new ShopDefinition(555, 444,444,5454,"Omer");
+        ShopDefinition testedShopRecord4 = new ShopDefinition(666, 555,444,4343,"Reim");
         ShopDefinition testedShopRecord5 = new ShopDefinition(777, 666,666,44,"Kfar-avraham");
         ShopDefinition testedShopRecord6 = new ShopDefinition(888, 777,777,54,"Ken ha kukia");
 
