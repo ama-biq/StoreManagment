@@ -8,11 +8,6 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Main {
-   // private static ChainDefinition chainDefinition = new ChainDefinition(10011, "Phones");
-//    private static  ShopDefinition shopDefinition = new ShopDefinition(211, 21, 111, 25, "Tel-Aviv");
-  //  private static EmployeeDefinition employeeDefinition = new EmployeeDefinition(10,2, 21);
-
-
 
 
     public static void main(String[] args) throws SQLException {

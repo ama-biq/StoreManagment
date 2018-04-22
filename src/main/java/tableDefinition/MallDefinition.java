@@ -22,29 +22,6 @@ public class MallDefinition {
         this.grpMallId = grpMallId;
     }
 
-    public int getMallId() {
-        return mallId;
-    }
-
-    public void setMallId(int mallId) {
-        this.mallId = mallId;
-    }
-
-    public String getMallName() {
-        return mallName;
-    }
-
-    public void setMallName(String mallName) {
-        this.mallName = mallName;
-    }
-
-    public String getMallAddress() {
-        return mallAddress;
-    }
-
-    public void setMallAddress(String mallAddress) {
-        this.mallAddress = mallAddress;
-    }
 
     public int createMall() throws SQLException {
         int status =0;

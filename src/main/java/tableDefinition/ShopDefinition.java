@@ -36,45 +36,6 @@ public class ShopDefinition {
 
     }
 
-    public int getShopId() {
-        return shopId;
-    }
-
-    public void setShopId(int shopId) {
-        this.shopId = shopId;
-    }
-
-    public int getChainId() {
-        return chainId;
-    }
-
-    public void setChainId(int chainId) {
-        this.chainId = chainId;
-    }
-
-    public int getMallId() {
-        return mallId;
-    }
-
-    public void setMallId(int mallId) {
-        this.mallId = mallId;
-    }
-
-    public int getMallShopId() {
-        return mallShopId;
-    }
-
-    public void setMallShopId(int mallShopId) {
-        this.mallShopId = mallShopId;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
 
     public int createShop() throws SQLException {
         int status = 0;

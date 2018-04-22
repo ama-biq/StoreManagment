@@ -24,21 +24,6 @@ public class ChainDefinition {
         this.category = category;
     }
 
-    public int getChainId() {
-        return chainId;
-    }
-
-    public void setChainId(int chainId) {
-        this.chainId = chainId;
-    }
-
-    public String getCategory() {
-        return category;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
-    }
 
     public int createChain() throws SQLException {
         int status =0;

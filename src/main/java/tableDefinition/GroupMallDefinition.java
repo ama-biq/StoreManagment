@@ -19,21 +19,6 @@ public class GroupMallDefinition {
         this.groupMallName = groupMallName;
     }
 
-    public int getGroupMallId() {
-        return groupMallId;
-    }
-
-    public void setGroupMallId(int groupMallId) {
-        this.groupMallId = groupMallId;
-    }
-
-    public String getGroupMallName() {
-        return groupMallName;
-    }
-
-    public void setGroupMallName(String groupMallName) {
-        this.groupMallName = groupMallName;
-    }
 
     public int createMallGrp() throws SQLException {
         int status =0;
