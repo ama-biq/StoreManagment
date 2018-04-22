@@ -1,8 +1,8 @@
 package tableDefinition;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MallDefinition {
 
@@ -12,6 +12,7 @@ public class MallDefinition {
     private int grpMallId;
     private static final String insertMall = "insert into mall(Mall_Id, Address, Name, Group_Mall_Id) VALUES(?,?,?,?)";
     private static final String deleteSpacificMall = "delete from mall where Mall_Id=?";
+    private static final String getAllMalls = "SELECT * from mall";
 
 
 
@@ -20,6 +21,10 @@ public class MallDefinition {
         this.mallName = mallName;
         this.mallAddress = mallAddress;
         this.grpMallId = grpMallId;
+    }
+
+    public MallDefinition() {
+
     }
 
 
@@ -54,4 +59,28 @@ public class MallDefinition {
         return status;
 
     }
-}
+
+    public List<Integer> getExistedMall(Connection connection) {
+
+        List <Integer>mallList = new ArrayList<>();
+        try{
+            PreparedStatement preparedStatement = connection.prepareStatement(getAllMalls);
+            ResultSet rs = preparedStatement.executeQuery();
+            ResultSet rsCopy = rs;
+            while(rs.next()) {
+                int i = 1;
+                while (i <= numberOfColumns(rsCopy)){
+                    mallList.add(rs.getInt(1));
+                    i=i+3;
+                }
+            }
+        }catch (SQLException e){
+            System.out.print(e.getMessage());
+        }
+        return mallList;
+    }
+
+    private int numberOfColumns(ResultSet resultSet) throws SQLException {
+        ResultSetMetaData metaData = resultSet.getMetaData();
+        return metaData.getColumnCount();
+    }}

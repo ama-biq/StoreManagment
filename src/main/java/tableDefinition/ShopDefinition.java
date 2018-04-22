@@ -37,11 +37,9 @@ public class ShopDefinition {
     }
 
 
-    public int createShop() throws SQLException {
+    public int createShop(Connection connection) throws SQLException {
         int status = 0;
         try {
-            ConnectionToDb connObject = new ConnectionToDb();
-            Connection connection = connObject.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(insertShopToTable);
             preparedStatement.setInt(1, shopId);
             preparedStatement.setString(2, address);

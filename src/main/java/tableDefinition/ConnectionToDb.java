@@ -21,7 +21,10 @@ public class ConnectionToDb {
          conn = ds.getConnection();
             return conn;
 
-
-
+    }
+    public void close(Connection connection) throws SQLException {
+        if(connection!= null){
+            connection.close();
+        }
     }
 }

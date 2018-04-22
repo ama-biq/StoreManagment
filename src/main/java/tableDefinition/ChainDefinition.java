@@ -1,9 +1,8 @@
 package tableDefinition;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ChainDefinition {
 
@@ -14,6 +13,7 @@ public class ChainDefinition {
     private static final String getChainById = "SELECT * from chain WHERE Chain_Id = ?";
     private static final String deleteChainById = "delete from chain where Chain_Id=?";
     private static final String insertChainToTable = "insert into chain(Chain_Id, Chain_Category) VALUES(?,?)";
+    private static final String getAllChains = "SELECT * from chain";
 
 
     public ChainDefinition() {
@@ -25,11 +25,9 @@ public class ChainDefinition {
     }
 
 
-    public int createChain() throws SQLException {
+    public int createChain(Connection connection) throws SQLException {
         int status =0;
         try{
-        ConnectionToDb connObject = new ConnectionToDb();
-        Connection connection = connObject.getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(insertChainToTable);
         preparedStatement.setInt(1, chainId);
         preparedStatement.setString(2, category);
@@ -71,4 +69,32 @@ public class ChainDefinition {
         return status;
 
     }
+
+    public List<Integer> getExistedChains(Connection connection) {
+        List <Integer>chainsList = new ArrayList<>();
+        try{
+                PreparedStatement preparedStatement = connection.prepareStatement(getAllChains);
+                ResultSet rs = preparedStatement.executeQuery();
+            ResultSet rsCopy = rs;
+            while(rs.next()) {
+                int i = 1;
+                //in while loop we run on the first column and insert its value to arraylist
+                //the values are the employee id
+                // i+3 - because there are 3 columns in table
+                while (i <= numberOfColumns(rsCopy)){
+                    chainsList.add(rs.getInt(1));
+                    i=i+3;
+                }
+            }
+            }catch (SQLException e){
+                System.out.print(e.getMessage());
+            }
+            return chainsList;
+    }
+
+    private int numberOfColumns(ResultSet resultSet) throws SQLException {
+        ResultSetMetaData metaData = resultSet.getMetaData();
+        return metaData.getColumnCount();
+    }
 }
+

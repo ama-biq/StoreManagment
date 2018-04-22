@@ -25,11 +25,9 @@ public class EmployeeDefinition {
     }
 
 
-    public int createEmployee() throws SQLException {
+    public int createEmployee(Connection connection) throws SQLException {
         int status =0;
         try {
-            ConnectionToDb connObject = new ConnectionToDb();
-            Connection connection = connObject.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(insertEmployeeToTable);
             preparedStatement.setInt(1, employeeId);
             preparedStatement.setInt(2, shopId);
@@ -100,7 +98,7 @@ public class EmployeeDefinition {
 
     }
 
-    private int numberOfColumns(ResultSet resultSet) throws SQLException {
+    public int numberOfColumns(ResultSet resultSet) throws SQLException {
         ResultSetMetaData metaData = resultSet.getMetaData();
         return metaData.getColumnCount();
     }

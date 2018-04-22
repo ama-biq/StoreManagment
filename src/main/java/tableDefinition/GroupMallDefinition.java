@@ -20,10 +20,8 @@ public class GroupMallDefinition {
     }
 
 
-    public int createMallGrp() throws SQLException {
+    public int createMallGrp(Connection connection) throws SQLException {
         int status =0;
-        ConnectionToDb connObject = new ConnectionToDb();
-        Connection connection = connObject.getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(insertGroupMallToTable);
         preparedStatement.setInt(1, groupMallId);
         preparedStatement.setString(2, groupMallName);
@@ -44,20 +42,16 @@ public class GroupMallDefinition {
         return column;
 
     }
-    public int deleteMallGrp() throws SQLException {
+    public int deleteMallGrp(Connection connection) throws SQLException {
         int status =0;
-        ConnectionToDb connObject = new ConnectionToDb();
-        Connection connection = connObject.getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(deleteMallGrp);
         status = preparedStatement.executeUpdate();
         return status;
 
     }
 
-    public int deleteSpecificMallGrp(int groupMallId) throws SQLException {
+    public int deleteSpecificMallGrp(Connection connection, int groupMallId) throws SQLException {
         int status =0;
-        ConnectionToDb connObject = new ConnectionToDb();
-        Connection connection = connObject.getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement("delete from mall_group where Group_Id=?");
         preparedStatement.setInt(1,groupMallId);
         status = preparedStatement.executeUpdate();
