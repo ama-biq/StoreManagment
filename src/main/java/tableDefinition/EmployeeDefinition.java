@@ -58,7 +58,8 @@ public class EmployeeDefinition {
             preparedStatement.setInt(2, shopId);
             preparedStatement.setInt(3, chainId);
             status = preparedStatement.executeUpdate();
-        }catch (Exception e) {//todo handle exception
+        }catch (Exception e) {
+            System.out.print(e.getMessage());
         }
         return status;
     }
@@ -71,7 +72,8 @@ public class EmployeeDefinition {
             PreparedStatement preparedStatement = connection.prepareStatement(deleteEmployeeById);
             preparedStatement.setInt(1, specificEmployee);
             status = preparedStatement.executeUpdate();
-        } catch (SQLException e) {//todo handle exception
+        } catch (SQLException e) {
+            System.out.print(e.getMessage());
         }
         return status;
 
@@ -88,7 +90,8 @@ public class EmployeeDefinition {
             if (rs.next()) {
                 column = rs.getInt(1);
             }
-        } catch (SQLException e) {//todo handle exception
+        } catch (SQLException e) {
+            System.out.print(e.getMessage());
         }
         return column;
 
@@ -113,7 +116,8 @@ public class EmployeeDefinition {
                     i=i+3;
                 }
             }
-        } catch (SQLException e) {//todo handle exception
+        } catch (SQLException e) {
+            System.out.print(e.getMessage());
         }
         return columnArrayList;
 

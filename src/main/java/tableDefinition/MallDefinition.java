@@ -58,7 +58,8 @@ public class MallDefinition {
             preparedStatement.setInt(4, grpMallId);
 
             status = preparedStatement.executeUpdate();
-        }catch (Exception e) {//todo handle exception
+        }catch (Exception e) {
+            System.out.print(e.getMessage());
         }
         return status;
     }
@@ -70,7 +71,8 @@ public class MallDefinition {
             PreparedStatement preparedStatement = connection.prepareStatement(deleteSpacificMall);
             preparedStatement.setInt(1, specificMall);
             status = preparedStatement.executeUpdate();
-        } catch (SQLException e) {//todo handle exception
+        } catch (SQLException e) {
+            System.out.print(e.getMessage());
         }
         return status;
 

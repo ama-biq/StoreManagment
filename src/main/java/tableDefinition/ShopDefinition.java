@@ -88,7 +88,8 @@ public class ShopDefinition {
             preparedStatement.setInt(4, mallId);
             preparedStatement.setInt(5, mallShopId);
             status = preparedStatement.executeUpdate();
-        } catch (SQLException e) {//todo handle exception
+        } catch (SQLException e) {
+            System.out.print(e.getMessage());
         }
         return status;
     }
@@ -101,7 +102,8 @@ public class ShopDefinition {
             PreparedStatement preparedStatement = connection.prepareStatement(deleteShopById);
             preparedStatement.setInt(1, specificShop);
             status = preparedStatement.executeUpdate();
-        } catch (SQLException e) {//todo handle exception
+        } catch (SQLException e) {
+            System.out.print(e.getMessage());
         }
         return status;
 
@@ -118,7 +120,8 @@ public class ShopDefinition {
             if (rs.next()) {
                 column = rs.getInt(1);
             }
-        } catch (SQLException e) {//todo handle exception
+        } catch (SQLException e) {
+            System.out.print(e.getMessage());
         }
         return column;
     }
@@ -142,7 +145,8 @@ public class ShopDefinition {
                     i=i+5;
                 }
             }
-        } catch (SQLException e) {//todo handle exception
+        } catch (SQLException e) {
+            System.out.print(e.getMessage());
         }
         return columnArrayList;
     }
@@ -165,7 +169,8 @@ public class ShopDefinition {
 
             rs.close();
             connection.close();
-        } catch (SQLException e) {//todo handle exception
+        } catch (SQLException e) {
+            System.out.print(e.getMessage());
         }
 
         return shops;

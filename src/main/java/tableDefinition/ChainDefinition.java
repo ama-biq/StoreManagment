@@ -49,7 +49,8 @@ public class ChainDefinition {
         preparedStatement.setInt(1, chainId);
         preparedStatement.setString(2, category);
         status = preparedStatement.executeUpdate();
-        }catch (SQLException e){//todo handle exception
+        }catch (SQLException e){
+            System.out.print(e.getMessage());
         }
         return status;
 
@@ -64,7 +65,8 @@ public class ChainDefinition {
             if (rs.next()) {
                 column = rs.getInt(1);
             }
-        }catch (SQLException e){//todo handle exception
+        }catch (SQLException e){
+            System.out.print(e.getMessage());
              }
         return column;
 
@@ -77,7 +79,9 @@ public class ChainDefinition {
         PreparedStatement preparedStatement = connection.prepareStatement(deleteChainById);
         preparedStatement.setInt(1,specificChain);
         status = preparedStatement.executeUpdate();
-        }catch (SQLException e){//todo handle exception
+        }catch (SQLException e){
+            System.out.print(e.getMessage());
+
         }
         return status;
 
