@@ -68,4 +68,16 @@ public class GroupMallDefinition {
         return status;
 
     }
+
+    public int deleteSpecificMallGrp(int groupMallId) throws SQLException {
+        int status =0;
+        ConnectionToDb connObject = new ConnectionToDb();
+        Connection connection = connObject.getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement("delete from mall_group where Group_Id=?");
+        preparedStatement.setInt(1,groupMallId);
+        status = preparedStatement.executeUpdate();
+        return status;
+
+    }
+
 }

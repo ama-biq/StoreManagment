@@ -16,6 +16,7 @@ public class ShopDefinition {
     private static final String getAllShopsByMall = "SELECT * FROM shop WHERE Mall_Id = ?";
     private static final String deleteShopById = "delete from shop where Shop_Id=?";
     private static final String insertShopToTable = "insert into shop(Shop_Id, Address, Chain_Id, Mall_Id, Mall_Shop_Id) VALUES(?,?,?,?,?)";
+    private static final String getAllShopsFromMallGroup = "SELECT Shop_Id FROM shop, mall, mall_group where shop.Mall_Id = mall.Mall_Id and mall.Group_Mall_Id = mall_group.Group_Id and mall_group.Group_Id = ?";
 
     public ShopDefinition(int shopId, int chainId, int mallId, int mallShopId, String address) {
         this.shopId = shopId;
@@ -135,7 +136,7 @@ public class ShopDefinition {
                 int i = 1;
                 //in while loop we run on the first column and insert its value to arraylist
                 //the values are the employee id
-                // i+3 - because there are 3 columns in table
+                // i+5 - because there are 5 columns in shop table
                 while (i <= numberOfColumns(rsCopy)){
                     columnArrayList.add(rs.getInt(1));
                     i=i+5;
@@ -148,5 +149,26 @@ public class ShopDefinition {
     private int numberOfColumns(ResultSet resultSet) throws SQLException {
         ResultSetMetaData metaData = resultSet.getMetaData();
         return metaData.getColumnCount();
+    }
+
+    public List<Integer> getAllShopsInSpecificMallGroup(int groupMallId) throws SQLException {
+        List<Integer> shops = new ArrayList<>();
+        try {
+            ConnectionToDb connObject = new ConnectionToDb();
+            Connection connection = connObject.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(getAllShopsFromMallGroup);
+            preparedStatement.setInt(1,groupMallId);
+            ResultSet rs = preparedStatement.executeQuery();
+            while (rs.next()) {
+                shops.add(rs.getInt(1));
+            }
+
+            rs.close();
+            connection.close();
+        } catch (SQLException e) {//todo handle exception
+        }
+
+        return shops;
+
     }
 }
