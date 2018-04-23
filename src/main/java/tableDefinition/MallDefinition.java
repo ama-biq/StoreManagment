@@ -62,12 +62,11 @@ public class MallDefinition {
 
     }
 
-    public List<Integer> getExistedMall(Connection connection) throws SQLException {
+    public Set<Integer> getExistedMall(Connection connection) throws SQLException {
 
-        List<Integer> mallList = new ArrayList<>();
+        Set<Integer> mallList = new HashSet<>();
             PreparedStatement preparedStatement = connection.prepareStatement(getAllMalls);
             ResultSet rs = preparedStatement.executeQuery();
-            ResultSet rsCopy = rs;
             while(rs.next()) {
                 int i = 1;
                 while (i <= numberOfColumns(rs)){

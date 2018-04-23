@@ -20,9 +20,9 @@ public class ShopDefinition {
     private static final String insertShopToTable = "insert into shop(Shop_Id, Address, Chain_Id, Mall_Id, Mall_Shop_Id) VALUES(?,?,?,?,?)";
     private static final String getAllShopsFromMallGroup = "SELECT Shop_Id FROM shop, mall, mall_group where shop.Mall_Id = mall.Mall_Id and mall.Group_Mall_Id = mall_group.Group_Id and mall_group.Group_Id = ?";
     private static final String getAllShops ="SELECT * FROM shop";
-    public ShopDefinition(int shopId, int chainId, int mallId, int mallShopId, String address) {
+
+    public ShopDefinition(int shopId, int chainId, int mallId, int mallShopId) {
         this.shopId = shopId;
-        this.address = address;
         this.chainId = chainId;
         this.mallId = mallId;
         this.mallShopId = mallShopId;
@@ -38,7 +38,6 @@ public class ShopDefinition {
 
     }
 
-
     public int createShop(Connection connection) throws SQLException {
         int status = 0;
             PreparedStatement preparedStatement = connection.prepareStatement(insertShopToTable);
@@ -51,6 +50,7 @@ public class ShopDefinition {
 
         return status;
     }
+
 
     public int deleteSpecificShop(int specificShop) throws SQLException {
         int status = 0;
