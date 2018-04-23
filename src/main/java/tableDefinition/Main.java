@@ -15,9 +15,12 @@ public class Main {
         MenuUtils menu = new MenuUtils();
         ConnectionToDb connObject = null;
         Connection connection = null;
+        PrepareDbClass prepareDbClass = new PrepareDbClass();
+
         try {
             connObject = new ConnectionToDb();
             connection = connObject.getConnection();
+            prepareDbClass.prepareDb(connection);
             int choice;
             do {
                 choice = menu.getChoice();
