@@ -39,7 +39,6 @@ public class ShopDefinition {
 
     public int createShop(Connection connection) throws SQLException {
         int status = 0;
-        try {
             PreparedStatement preparedStatement = connection.prepareStatement(insertShopToTable);
             preparedStatement.setInt(1, shopId);
             preparedStatement.setString(2, address);
@@ -47,30 +46,23 @@ public class ShopDefinition {
             preparedStatement.setInt(4, mallId);
             preparedStatement.setInt(5, mallShopId);
             status = preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            System.out.print(e.getMessage());
-        }
+
         return status;
     }
 
     public int deleteSpecificShop(int specificShop) throws SQLException {
         int status = 0;
-        try {
             ConnectionToDb connObject = new ConnectionToDb();
             Connection connection = connObject.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(deleteShopById);
             preparedStatement.setInt(1, specificShop);
             status = preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            System.out.print(e.getMessage());
-        }
         return status;
 
     }
 
     public int getSpecificShop(int specificShop) throws SQLException {
         int column = 0;
-        try {
             ConnectionToDb connObject = new ConnectionToDb();
             Connection connection = connObject.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(getShopById);
@@ -79,15 +71,11 @@ public class ShopDefinition {
             if (rs.next()) {
                 column = rs.getInt(1);
             }
-        } catch (SQLException e) {
-            System.out.print(e.getMessage());
-        }
         return column;
     }
 
     public List<Integer> getAllShopInCertainMall(int specificMall) throws SQLException {
         List<Integer> columnArrayList = new ArrayList<>();
-        try {
             ConnectionToDb connObject = new ConnectionToDb();
             Connection connection = connObject.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(getAllShopsByMall);
@@ -104,9 +92,7 @@ public class ShopDefinition {
                     i=i+5;
                 }
             }
-        } catch (SQLException e) {
-            System.out.print(e.getMessage());
-        }
+
         return columnArrayList;
     }
     private int numberOfColumns(ResultSet resultSet) throws SQLException {
@@ -116,7 +102,6 @@ public class ShopDefinition {
 
     public List<Integer> getAllShopsInSpecificMallGroup(int groupMallId) throws SQLException {
         List<Integer> shops = new ArrayList<>();
-        try {
             ConnectionToDb connObject = new ConnectionToDb();
             Connection connection = connObject.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(getAllShopsFromMallGroup);
@@ -128,9 +113,6 @@ public class ShopDefinition {
 
             rs.close();
             connection.close();
-        } catch (SQLException e) {
-            System.out.print(e.getMessage());
-        }
 
         return shops;
 

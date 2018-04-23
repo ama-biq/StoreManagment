@@ -27,36 +27,29 @@ public class EmployeeDefinition {
 
     public int createEmployee(Connection connection) throws SQLException {
         int status =0;
-        try {
             PreparedStatement preparedStatement = connection.prepareStatement(insertEmployeeToTable);
             preparedStatement.setInt(1, employeeId);
             preparedStatement.setInt(2, shopId);
             preparedStatement.setInt(3, chainId);
             status = preparedStatement.executeUpdate();
-        }catch (Exception e) {
-            System.out.print(e.getMessage());
-        }
+
         return status;
     }
 
     public int deleteSpecificEmployee(int specificEmployee) throws SQLException {
         int status = 0;
-        try {
             ConnectionToDb connObject = new ConnectionToDb();
             Connection connection = connObject.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(deleteEmployeeById);
             preparedStatement.setInt(1, specificEmployee);
             status = preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            System.out.print(e.getMessage());
-        }
+
         return status;
 
     }
 
     public int getSpecificEmployee(int specificEmployee) throws SQLException {
         int column = 0;
-        try {
             ConnectionToDb connObject = new ConnectionToDb();
             Connection connection = connObject.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(getEmployeeById);
@@ -65,16 +58,13 @@ public class EmployeeDefinition {
             if (rs.next()) {
                 column = rs.getInt(1);
             }
-        } catch (SQLException e) {
-            System.out.print(e.getMessage());
-        }
+
         return column;
 
     }
 
     public List<Integer> getAllEmployeeInChain(int specificChain) throws SQLException {
         List <Integer>columnArrayList = new ArrayList<>();
-        try {
             ConnectionToDb connObject = new ConnectionToDb();
             Connection connection = connObject.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT * from employee WHERE Chain_Id = ?");
@@ -91,9 +81,7 @@ public class EmployeeDefinition {
                     i=i+3;
                 }
             }
-        } catch (SQLException e) {
-            System.out.print(e.getMessage());
-        }
+
         return columnArrayList;
 
     }

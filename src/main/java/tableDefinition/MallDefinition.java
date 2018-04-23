@@ -2,7 +2,9 @@ package tableDefinition;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class MallDefinition {
 
@@ -60,10 +62,9 @@ public class MallDefinition {
 
     }
 
-    public List<Integer> getExistedMall(Connection connection) {
+    public Set<Integer> getExistedMall(Connection connection) throws SQLException {
 
-        List <Integer>mallList = new ArrayList<>();
-        try{
+        Set<Integer> mallList = new HashSet<>();
             PreparedStatement preparedStatement = connection.prepareStatement(getAllMalls);
             ResultSet rs = preparedStatement.executeQuery();
             ResultSet rsCopy = rs;
@@ -74,9 +75,6 @@ public class MallDefinition {
                     i=i+3;
                 }
             }
-        }catch (SQLException e){
-            System.out.print(e.getMessage());
-        }
         return mallList;
     }
 

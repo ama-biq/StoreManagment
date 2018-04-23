@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.Set;
 
 public class Main {
 
@@ -104,11 +105,11 @@ public class Main {
         int shopId = scShop.nextInt();
         System.out.println("Insert address (should be string): ");
 
-        List<Integer> chainsList = chainDefinition.getExistedChains(connection);
+        Set<Integer> chainsList = chainDefinition.getExistedChains(connection);
         System.out.println("Insert chain id, available chains are : "+chainsList.toString());
         int chainIdForShop= scShop.nextInt();
 
-        List<Integer> mallList= mallDefinition.getExistedMall(connection);
+        Set<Integer> mallList= mallDefinition.getExistedMall(connection);
         System.out.println("Insert Mall id, available malls are: " + mallList.toString());
         int mallId = scShop.nextInt();
         System.out.println("Insert Shop id in mall (should be int): ");
