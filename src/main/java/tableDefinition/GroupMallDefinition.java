@@ -49,7 +49,7 @@ public class GroupMallDefinition {
 
     public Set<Integer> getAllMallGrp(Connection connection) throws SQLException {
         Set<Integer>setMallGroups = new HashSet<>();
-        PreparedStatement preparedStatement = connection.prepareStatement(getAllGroupMall);
+        PreparedStatement preparedStatement = connection.prepareStatement(GET_ALL_GROUP_MALL);
         ResultSet rs = preparedStatement.executeQuery();
         while(rs.next()) {
             int i = 1;

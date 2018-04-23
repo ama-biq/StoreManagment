@@ -10,25 +10,20 @@ import java.util.Set;
 
 public class MenuUtils {
 
-     void presentAllShopsInMallGroup(Connection connection) throws SQLException {
+    void presentAllShopsInMallGroup(Connection connection) throws SQLException {
         GroupMallDefinition groupMallDefinition = new GroupMallDefinition();
         ShopDefinition shopDefinition = new ShopDefinition();
-        Set<Integer>setMallGroups = groupMallDefinition.getAllMallGrp(connection);
-
-
-         System.out.println("Insert available Mall Group Id, available Id's are: " + setMallGroups.toString());
+        Set<Integer> setMallGroups = groupMallDefinition.getAllMallGrp(connection);
+        System.out.println("Insert available Mall Group Id, available Id's are: " + setMallGroups.toString());
         Scanner scShop = new Scanner(System.in);
         int mallGrp = scShop.nextInt();
-        Set<Integer>shopSet =  shopDefinition.getAllShopsInSpecificMallGroup(mallGrp);
-        if(!shopSet.isEmpty()){
+        Set<Integer> shopSet = shopDefinition.getAllShopsInSpecificMallGroup(connection, mallGrp);
+        if (!shopSet.isEmpty()) {
             System.out.println("The shops that belongs to specific Mall Group is: " + shopSet.toString());
-        }else {
+        } else {
             System.out.println("No shops found on specific Mall Group.");
         }
-         System.out.println("-------------------------------------------------------------");
-
-
-
+        System.out.println("-------------------------------------------------------------");
     }
 
     void presentAllShopsInMall(Connection connection) throws SQLException {
@@ -45,7 +40,7 @@ public class MenuUtils {
         } else {
             System.out.println("Not found shops in Shopping Mall: " + mallId);
         }
-         System.out.println("--------------------------------------------------");
+        System.out.println("--------------------------------------------------");
     }
 
     void presentAllEmployeesInChain(Connection connection) throws SQLException {
@@ -62,7 +57,7 @@ public class MenuUtils {
         } else {
             System.out.println("Not found employees in chain: " + chainId);
         }
-         System.out.println("--------------------------------------------------");
+        System.out.println("--------------------------------------------------");
     }
 
     void addNewEmployee(Connection connection) throws SQLException {
@@ -125,7 +120,7 @@ public class MenuUtils {
         } catch (MySQLIntegrityConstraintViolationException e) {
             System.out.println("Shop with id: " + shopId + " already exists.");
         }
-         System.out.println("--------------------------------------------------");
+        System.out.println("--------------------------------------------------");
     }
 
     void addNewChain(Connection connection) throws SQLException {
@@ -171,6 +166,7 @@ public class MenuUtils {
         }
         return builder.toString();
     }
+
     void presentAllDetailsOfShop(Connection connection) throws SQLException {
         ShopDefinition shopDefinition = new ShopDefinition();
         Set<Integer> shopSet = shopDefinition.getExistedShops(connection);

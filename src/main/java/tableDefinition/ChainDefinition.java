@@ -25,7 +25,7 @@ public class ChainDefinition {
     }
 
     int createChain(Connection connection) throws SQLException {
-        int status = 0;
+        int status;
         PreparedStatement preparedStatement = connection.prepareStatement(INSERT_CHAIN_TO_TABLE);
         preparedStatement.setInt(1, chainId);
         preparedStatement.setString(2, category);
@@ -45,7 +45,7 @@ public class ChainDefinition {
     }
 
     int deleteSpecificChain(Connection connection, int specificChain) throws SQLException {
-        int status = 0;
+        int status;
         PreparedStatement preparedStatement = connection.prepareStatement(DELETE_CHAIN_BY_ID);
         preparedStatement.setInt(1, specificChain);
         status = preparedStatement.executeUpdate();

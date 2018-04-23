@@ -15,6 +15,7 @@ public class EmployeeDefinition {
     private static final String DELETE_EMPLOYEE_BY_ID = "delete from employee where Employee_Id=?";
     private static final String INSERT_EMPLOYEE_TO_TABLE = "insert into employee(Employee_Id, Shop_Id, Chain_Id) VALUES(?,?,?)";
     private static final String GET_ALL_EMPLOYEES = "select * from employee";
+    private static final String GET_EMPLOYEE_BY_CHAIN_ID = "SELECT * from employee WHERE Chain_Id = ?";
 
 
     EmployeeDefinition(int employeeId, int shopId, int chainId) {
@@ -58,7 +59,7 @@ public class EmployeeDefinition {
 
     List<Integer> getAllEmployeeInChain(Connection connection, int specificChain) throws SQLException {
         List<Integer> columnArrayList = new ArrayList<>();
-        PreparedStatement preparedStatement = connection.prepareStatement("SELECT * from employee WHERE Chain_Id = ?");
+        PreparedStatement preparedStatement = connection.prepareStatement(GET_EMPLOYEE_BY_CHAIN_ID);
         preparedStatement.setInt(1, specificChain);
         ResultSet rs = preparedStatement.executeQuery();
         ResultSet rsCopy = rs;

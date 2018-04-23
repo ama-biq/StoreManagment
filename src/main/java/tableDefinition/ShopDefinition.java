@@ -98,13 +98,12 @@ public class ShopDefinition {
 
     public Set<Integer> getAllShopsInSpecificMallGroup(Connection connection, int groupMallId) throws SQLException {
         Set<Integer> shops = new HashSet<>();
-            PreparedStatement preparedStatement = connection.prepareStatement(getAllShopsFromMallGroup);
+            PreparedStatement preparedStatement = connection.prepareStatement(GET_ALL_SHOPS_FROM_MALL_GROUP);
             preparedStatement.setInt(1,groupMallId);
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
                 shops.add(rs.getInt(1));
             }
-
             rs.close();
         return shops;
     }
@@ -147,7 +146,7 @@ public class ShopDefinition {
         ShopDefinition retValShop = new ShopDefinition();
         List<Object> list = new ArrayList<>();
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement(getShopById);
+            PreparedStatement preparedStatement = connection.prepareStatement(GET_SHOP_BY_ID);
             preparedStatement.setInt(1,shopId);
             ResultSet rs = preparedStatement.executeQuery();
             ResultSetMetaData metadata = rs.getMetaData();
