@@ -13,7 +13,6 @@ public class Main {
 
 
     public static void main(String[] args) throws SQLException {
-
         ConnectionToDb connObject = null;
         Connection connection = null;
         try {
@@ -22,7 +21,7 @@ public class Main {
             int choice;
             do {
                 choice = getChoice();
-                if (choice == -99) {
+                if (choice == 99) {
                     break;
                 } else {
                     switch (choice) {
@@ -35,61 +34,95 @@ public class Main {
                         case 3:
                             addNewEmployee(connection);
                             break;
+                        case 4:
+                            presentAllShopsInMall(connection);
+                            break;
+                        case 5:
+                           // presentAllShopsInMallGroup(connection);
+                            break;
+                        case 6:
+                            presentAllEmployeesInChain(connection);
+                            break;
+                        case 7:
+                            //Present all details of a Shop
+                            break;
+                        case 8:
+                            return;
                         default:
                             System.out.println("Wrong choice, please choose again");
-
 
                     }
                 }
 
-            } while (choice != -99);
+            } while (
+            choice != 99);
 
 
-// Get all employees of a certain chain.
-            createThreeEmployees(connection);
-            EmployeeDefinition employeeDefinition = new EmployeeDefinition();
-            List<Integer> emplList = employeeDefinition.getAllEmployeeInChain(21);
-            List<Integer> expectedEmplList = new ArrayList<>();
-            expectedEmplList.add(10);
-            expectedEmplList.add(11);
-            expectedEmplList.add(12);
-            if (emplList.equals(expectedEmplList)) {
-                System.out.println("The ID's of Employees that works in Chain is: " + printEmployeeId(emplList));
-            } else {
-                System.out.println("Not found ID's of Employees");
-            }
 
-// Present all shops that are in the certain Shoping mall.
-            createThreeShopsOnlyTwoInTheSameMall(connection);
-            ShopDefinition shopDefinition = new ShopDefinition();
-            List<Integer> shopActualList = shopDefinition.getAllShopInCertainMall(777);
-            List<Integer> shopExpectedList = new ArrayList<>();
-            shopExpectedList.add(2);
-            shopExpectedList.add(2323);
-            if (shopActualList.equals(shopExpectedList)) {
-                System.out.println("The shop id's in Shoping mall 777 are: " + printShopIds(shopActualList));
-            } else {
-                System.out.println("Not found ID's of Shops");
-            }
-            // cleanDbForMain(chainId, shopId, employeeId);
+
 
         }finally {
             connObject.close(connection);
         }
     }
 
+    private static void presentAllShopsInMall(Connection connection) throws SQLException {
+        // Present all shops that are in the certain Shoping mall.
+        ShopDefinition shopDefinition = new ShopDefinition();
+        Scanner sc = new Scanner(System.in);
+        MallDefinition mallDefinition = new MallDefinition();
+        List<Integer>mallList = mallDefinition.getExistedMall(connection);
+        System.out.println("Insert available mall Id, available Id's are: "+mallList.toString());
+        int mallId = sc.nextInt();
+        List<Integer> shopActualList = shopDefinition.getAllShopInCertainMall(mallId, connection);
+        if (!shopActualList.isEmpty()) {
+            System.out.println("The shop id's in Shoping mall "+mallId+" are: " + printShopIds(shopActualList));
+        } else {
+            System.out.println("Not found ID's of Shops");
+        }
+    }
+
+
+    private static void presentAllEmployeesInChain(Connection connection) throws SQLException {
+        // Get all employees of a certain chain.
+       // createThreeEmployees(connection);
+        ChainDefinition chainDefinition = new ChainDefinition();
+        Set<Integer> chainsList = chainDefinition.getExistedChains(connection);
+        System.out.println("Insert available chain Id, available Id's are: "+chainsList.toString());
+        Scanner sc = new Scanner(System.in);
+        int chainId = sc.nextInt();
+        EmployeeDefinition employeeDefinition = new EmployeeDefinition();
+        List<Integer> emplList = employeeDefinition.getAllEmployeeInChain(chainId);
+        if (!emplList.isEmpty()) {
+            System.out.println("The ID's of Employees that works in Chain is: " + printEmployeeId(emplList));
+        } else {
+            System.out.println("Not found ID's of Employees in chain");
+        }
+    }
+
     private static void addNewEmployee(Connection connection) throws SQLException {
         // Create new employee.
+
         Scanner scEmployee = new Scanner(System.in);
-        System.out.println("Insert new employee ID (should be int): ");
+        EmployeeDefinition employeeDefinition = new EmployeeDefinition();
+        Set<Integer> employeessList = employeeDefinition.getExistedEmployees(connection);
+        System.out.println("Insert new employee ID, existing employees are: " + employeessList.toString());
         int employeeId=scEmployee.nextInt();
-        System.out.println("Insert new employee Shop id (should be int): ");
+
+        ShopDefinition shopDefinition = new ShopDefinition();
+        Set<Integer> shopsList = shopDefinition.getExistedShops(connection);
+        System.out.println("Insert shop id from available list, available shops are : "+shopsList.toString());
         int shopIdForNewEmployee = scEmployee.nextInt();
-        System.out.println("Insert ChainId for new employee (should be int): ");
+
+        ChainDefinition chainDefinition = new ChainDefinition();
+        Set<Integer> chainsList = chainDefinition.getExistedChains(connection);
+        System.out.println("Insert chain id, available chains are : "+chainsList.toString());
         int chainIdForNewEmployee = scEmployee.nextInt();
-        EmployeeDefinition employeeDefinition = new EmployeeDefinition(employeeId,shopIdForNewEmployee, chainIdForNewEmployee);
-        if(employeeDefinition.createEmployee(connection)==1) {
-            System.out.println("The ID of created Employee is: "+employeeDefinition.getSpecificEmployee(employeeId));
+
+//todo to check if possible to use one employee
+        EmployeeDefinition employee = new EmployeeDefinition(employeeId,shopIdForNewEmployee, chainIdForNewEmployee);
+        if(employee.createEmployee(connection)==1) {
+            System.out.println("The ID of created Employee is: "+employee.getSpecificEmployee(employeeId));
         }else {
             System.out.println("Employee already exists.");
         }
@@ -100,23 +133,29 @@ public class Main {
         //Create new shop
         ChainDefinition chainDefinition = new ChainDefinition();
         MallDefinition mallDefinition = new MallDefinition();
+        ShopDefinition shopDefinition = new ShopDefinition();
+        Set<Integer> storesList = chainDefinition.getExistedChains(connection);
         Scanner scShop = new Scanner(System.in);
-        System.out.println("Insert shop id (should be int): ");
+        System.out.println("Insert new store id, existing stores are : "+storesList.toString());
         int shopId = scShop.nextInt();
-        System.out.println("Insert address (should be string): ");
 
         Set<Integer> chainsList = chainDefinition.getExistedChains(connection);
-        System.out.println("Insert chain id, available chains are : "+chainsList.toString());
+        System.out.println("Insert chain id from available list, available chains are : "+chainsList.toString());
         int chainIdForShop= scShop.nextInt();
 
-        Set<Integer> mallList= mallDefinition.getExistedMall(connection);
-        System.out.println("Insert Mall id, available malls are: " + mallList.toString());
+        List<Integer> mallList= mallDefinition.getExistedMall(connection);
+        System.out.println("Insert Mall id from available list, available malls are: " + mallList.toString());
         int mallId = scShop.nextInt();
+
         System.out.println("Insert Shop id in mall (should be int): ");
         int mallShopId = scShop.nextInt();
+
         System.out.println("Insert address (should be String): ");
         String address = scShop.next();
-        ShopDefinition shopDefinition = new ShopDefinition(shopId, chainIdForShop, mallId, mallShopId, address);
+
+        //todo to check if possible to use one employee
+
+        shopDefinition = new ShopDefinition(shopId, chainIdForShop, mallId, mallShopId, address);
         if(shopDefinition.createShop(connection)==1) {
             System.out.println("The ID of created Shop is: "+shopDefinition.getSpecificShop(shopId));
         }else {
@@ -127,11 +166,15 @@ public class Main {
     private static void addNewChain(Connection connection) throws SQLException {
         // Create new chain.
         Scanner scChain = new Scanner(System.in);
-        System.out.println("Insert Chain id (should be int): ");
+        ChainDefinition chainDefinition = new ChainDefinition();
+        Set<Integer> chainsList = chainDefinition.getExistedChains(connection);
+        System.out.println("Insert new chain id, existing chains are : "+chainsList.toString());
         int chainId=scChain.nextInt();
         System.out.println("Insert chain category (type string): ");
         String chainCategory = scChain.next();
-        ChainDefinition chainDefinition = new ChainDefinition(chainId, chainCategory);
+
+        //todo to check if possible to use one ChainDefinition
+         chainDefinition = new ChainDefinition(chainId, chainCategory);
         if(chainDefinition.createChain(connection)==1) {
             System.out.println("Chain created with id: "+chainDefinition.getSpecificChain(chainId));
         }else {
@@ -142,9 +185,14 @@ public class Main {
     private static int getChoice() {
         System.out.println("You have number of choices to perform on DB.");
         System.out.println("Pleas insert your choice accordignly to the list:");
-        System.out.println("1. Add new chain.");
-        System.out.println("2. Add new shop.");
-        System.out.println("3. Add new employee.");
+        System.out.println("1. Create a new Chain.");
+        System.out.println("2. Add a store to a Chain.");
+        System.out.println("3. Add Employee to Chain .");
+        System.out.println("4. Present all shops that are in a certain Shopping Mall.");
+        System.out.println("5. Present all shops that are in a certain Shopping Mall Group.");
+        System.out.println("6. Present all Employees of a certain Chain.");
+        System.out.println("7. Present all details of a Shop.");
+        System.out.println("8. Exit the menu.");
         Scanner scInit = new Scanner(System.in);
         return scInit.nextInt();
     }
@@ -185,12 +233,8 @@ public class Main {
     }
 
     public static void createThreeEmployees(Connection connection) throws SQLException {
-        EmployeeDefinition definitionEmployee = new EmployeeDefinition(10,2, 21);
-        definitionEmployee.createEmployee(connection);
-        EmployeeDefinition definitionEmployee1 = new EmployeeDefinition(11,2, 21);
-        definitionEmployee1.createEmployee(connection);
-        EmployeeDefinition definitionEmployee2 = new EmployeeDefinition(12,2, 21);
-        definitionEmployee2.createEmployee(connection);
+
+
     }
     private static void cleanDbForMain(int chainId, int shopId, int employeeId) throws SQLException {
         ChainDefinition chainDefinition = new ChainDefinition();

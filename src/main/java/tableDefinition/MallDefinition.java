@@ -62,15 +62,15 @@ public class MallDefinition {
 
     }
 
-    public Set<Integer> getExistedMall(Connection connection) throws SQLException {
+    public List<Integer> getExistedMall(Connection connection) throws SQLException {
 
-        Set<Integer> mallList = new HashSet<>();
+        List<Integer> mallList = new ArrayList<>();
             PreparedStatement preparedStatement = connection.prepareStatement(getAllMalls);
             ResultSet rs = preparedStatement.executeQuery();
             ResultSet rsCopy = rs;
             while(rs.next()) {
                 int i = 1;
-                while (i <= numberOfColumns(rsCopy)){
+                while (i <= numberOfColumns(rs)){
                     mallList.add(rs.getInt(1));
                     i=i+3;
                 }
@@ -81,4 +81,7 @@ public class MallDefinition {
     private int numberOfColumns(ResultSet resultSet) throws SQLException {
         ResultSetMetaData metaData = resultSet.getMetaData();
         return metaData.getColumnCount();
-    }}
+    }
+
+
+}

@@ -2,7 +2,9 @@ package tableDefinition;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class EmployeeDefinition {
 
@@ -12,6 +14,7 @@ public class EmployeeDefinition {
     private static final String getEmployeeById = "SELECT * from employee WHERE Employee_Id = ?";
     private static final String deleteEmployeeById = "delete from employee where Employee_Id=?";
     private static final String insertEmployeeToTable = "insert into employee(Employee_Id, Shop_Id, Chain_Id) VALUES(?,?,?)";
+    private static final String getAllEmployees = "select * from employee";
 
 
     public EmployeeDefinition(int employeeId, int shopId, int chainId) {
@@ -85,6 +88,23 @@ public class EmployeeDefinition {
         return columnArrayList;
 
     }
+
+    public Set<Integer> getExistedEmployees(Connection connection) throws SQLException {
+        Set<Integer> employeesList = new HashSet<>();
+        PreparedStatement preparedStatement = connection.prepareStatement(getAllEmployees);
+        ResultSet rs = preparedStatement.executeQuery();
+        ResultSet rsCopy = rs;
+        while(rs.next()) {
+            int i = 1;
+            while (i <= numberOfColumns(rsCopy)) {
+                employeesList.add(rs.getInt(1));
+                i = i + 3;
+            }
+        }
+
+        return employeesList;
+    }
+
 
     public int numberOfColumns(ResultSet resultSet) throws SQLException {
         ResultSetMetaData metaData = resultSet.getMetaData();

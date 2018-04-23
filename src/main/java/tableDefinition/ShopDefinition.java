@@ -2,7 +2,9 @@ package tableDefinition;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class ShopDefinition {
 
@@ -17,7 +19,7 @@ public class ShopDefinition {
     private static final String deleteShopById = "delete from shop where Shop_Id=?";
     private static final String insertShopToTable = "insert into shop(Shop_Id, Address, Chain_Id, Mall_Id, Mall_Shop_Id) VALUES(?,?,?,?,?)";
     private static final String getAllShopsFromMallGroup = "SELECT Shop_Id FROM shop, mall, mall_group where shop.Mall_Id = mall.Mall_Id and mall.Group_Mall_Id = mall_group.Group_Id and mall_group.Group_Id = ?";
-
+    private static final String getAllShops ="SELECT * FROM shop";
     public ShopDefinition(int shopId, int chainId, int mallId, int mallShopId, String address) {
         this.shopId = shopId;
         this.address = address;
@@ -74,10 +76,8 @@ public class ShopDefinition {
         return column;
     }
 
-    public List<Integer> getAllShopInCertainMall(int specificMall) throws SQLException {
+    public List<Integer> getAllShopInCertainMall(int specificMall, Connection connection) throws SQLException {
         List<Integer> columnArrayList = new ArrayList<>();
-            ConnectionToDb connObject = new ConnectionToDb();
-            Connection connection = connObject.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(getAllShopsByMall);
             preparedStatement.setInt(1, specificMall);
             ResultSet rs = preparedStatement.executeQuery();
@@ -116,5 +116,21 @@ public class ShopDefinition {
 
         return shops;
 
+    }
+
+    public Set<Integer> getExistedShops(Connection connection) throws SQLException {
+        Set<Integer> shopsList = new HashSet<>();
+        PreparedStatement preparedStatement = connection.prepareStatement(getAllShops);
+        ResultSet rs = preparedStatement.executeQuery();
+        ResultSet rsCopy = rs;
+        while(rs.next()) {
+            int i = 1;
+            while (i <= numberOfColumns(rsCopy)) {
+                shopsList.add(rs.getInt(1));
+                i = i + 5;
+            }
+        }
+
+        return shopsList;
     }
 }
