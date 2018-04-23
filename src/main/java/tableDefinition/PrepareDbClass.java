@@ -50,7 +50,7 @@ public class PrepareDbClass {
         PreparedStatement preparedStatementInsert8 = connection.prepareStatement(insertShop);
         PreparedStatement preparedStatementInsert9 = connection.prepareStatement(insertShop1);
         PreparedStatement preparedStatementInsert10 = connection.prepareStatement(insertEmployee);
-        PreparedStatement preparedStatementInsert11= connection.prepareStatement(insertEmployee1);
+        PreparedStatement preparedStatementInsert11= connection.prepareStatement(insertEmployee1) ;
 
         preparedStatementDelete.executeUpdate();
         preparedStatementDelete1.executeUpdate();
