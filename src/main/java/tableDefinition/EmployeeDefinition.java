@@ -11,102 +11,87 @@ public class EmployeeDefinition {
     private int employeeId;
     private int shopId;
     private int chainId;
-    private static final String getEmployeeById = "SELECT * from employee WHERE Employee_Id = ?";
-    private static final String deleteEmployeeById = "delete from employee where Employee_Id=?";
-    private static final String insertEmployeeToTable = "insert into employee(Employee_Id, Shop_Id, Chain_Id) VALUES(?,?,?)";
-    private static final String getAllEmployees = "select * from employee";
+    private static final String GET_EMPLOYEE_BY_ID = "SELECT * from employee WHERE Employee_Id = ?";
+    private static final String DELETE_EMPLOYEE_BY_ID = "delete from employee where Employee_Id=?";
+    private static final String INSERT_EMPLOYEE_TO_TABLE = "insert into employee(Employee_Id, Shop_Id, Chain_Id) VALUES(?,?,?)";
+    private static final String GET_ALL_EMPLOYEES = "select * from employee";
 
 
-    public EmployeeDefinition(int employeeId, int shopId, int chainId) {
+    EmployeeDefinition(int employeeId, int shopId, int chainId) {
         this.employeeId = employeeId;
         this.shopId = shopId;
         this.chainId = chainId;
     }
 
-    public EmployeeDefinition() {
-
+    EmployeeDefinition() {
     }
 
-
-    public int createEmployee(Connection connection) throws SQLException {
-        int status =0;
-            PreparedStatement preparedStatement = connection.prepareStatement(insertEmployeeToTable);
-            preparedStatement.setInt(1, employeeId);
-            preparedStatement.setInt(2, shopId);
-            preparedStatement.setInt(3, chainId);
-            status = preparedStatement.executeUpdate();
-
-        return status;
-    }
-
-    public int deleteSpecificEmployee(int specificEmployee) throws SQLException {
+    int createEmployee(Connection connection) throws SQLException {
         int status = 0;
-            ConnectionToDb connObject = new ConnectionToDb();
-            Connection connection = connObject.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(deleteEmployeeById);
-            preparedStatement.setInt(1, specificEmployee);
-            status = preparedStatement.executeUpdate();
+        PreparedStatement preparedStatement = connection.prepareStatement(INSERT_EMPLOYEE_TO_TABLE);
+        preparedStatement.setInt(1, employeeId);
+        preparedStatement.setInt(2, shopId);
+        preparedStatement.setInt(3, chainId);
+        status = preparedStatement.executeUpdate();
 
         return status;
-
     }
 
-    public int getSpecificEmployee(int specificEmployee) throws SQLException {
+    public int deleteSpecificEmployee(Connection connection, int specificEmployee) throws SQLException {
+        int status = 0;
+        PreparedStatement preparedStatement = connection.prepareStatement(DELETE_EMPLOYEE_BY_ID);
+        preparedStatement.setInt(1, specificEmployee);
+        status = preparedStatement.executeUpdate();
+        return status;
+    }
+
+    int getSpecificEmployee(Connection connection, int specificEmployee) throws SQLException {
         int column = 0;
-            ConnectionToDb connObject = new ConnectionToDb();
-            Connection connection = connObject.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(getEmployeeById);
-            preparedStatement.setInt(1, specificEmployee);
-            ResultSet rs = preparedStatement.executeQuery();
-            if (rs.next()) {
-                column = rs.getInt(1);
-            }
-
+        PreparedStatement preparedStatement = connection.prepareStatement(GET_EMPLOYEE_BY_ID);
+        preparedStatement.setInt(1, specificEmployee);
+        ResultSet rs = preparedStatement.executeQuery();
+        if (rs.next()) {
+            column = rs.getInt(1);
+        }
         return column;
-
     }
 
-    public List<Integer> getAllEmployeeInChain(int specificChain) throws SQLException {
-        List <Integer>columnArrayList = new ArrayList<>();
-            ConnectionToDb connObject = new ConnectionToDb();
-            Connection connection = connObject.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * from employee WHERE Chain_Id = ?");
-            preparedStatement.setInt(1, specificChain);
-            ResultSet rs = preparedStatement.executeQuery();
-            ResultSet rsCopy = rs;
-            while(rs.next()) {
-                int i = 1;
-                //in while loop we run on the first column and insert its value to arraylist
-                //the values are the employee id
-                // i+3 - because there are 3 columns in table
-                while (i <= numberOfColumns(rsCopy)){
-                    columnArrayList.add(rs.getInt(1));
-                    i=i+3;
-                }
-            }
-
-        return columnArrayList;
-
-    }
-
-    public Set<Integer> getExistedEmployees(Connection connection) throws SQLException {
-        Set<Integer> employeesList = new HashSet<>();
-        PreparedStatement preparedStatement = connection.prepareStatement(getAllEmployees);
+    List<Integer> getAllEmployeeInChain(Connection connection, int specificChain) throws SQLException {
+        List<Integer> columnArrayList = new ArrayList<>();
+        PreparedStatement preparedStatement = connection.prepareStatement("SELECT * from employee WHERE Chain_Id = ?");
+        preparedStatement.setInt(1, specificChain);
         ResultSet rs = preparedStatement.executeQuery();
         ResultSet rsCopy = rs;
-        while(rs.next()) {
+        while (rs.next()) {
+            int i = 1;
+            //in while loop we run on the first column and insert its value to arraylist
+            //the values are the employee id
+            // i+3 - because there are 3 columns in table
+            while (i <= numberOfColumns(rsCopy)) {
+                columnArrayList.add(rs.getInt(1));
+                i = i + 3;
+            }
+        }
+        return columnArrayList;
+    }
+
+    Set<Integer> getExistedEmployees(Connection connection) throws SQLException {
+        Set<Integer> employeesList = new HashSet<>();
+        PreparedStatement preparedStatement = connection.prepareStatement(GET_ALL_EMPLOYEES);
+        ResultSet rs = preparedStatement.executeQuery();
+        ResultSet rsCopy = rs;
+        while (rs.next()) {
             int i = 1;
             while (i <= numberOfColumns(rsCopy)) {
                 employeesList.add(rs.getInt(1));
                 i = i + 3;
             }
         }
-
         return employeesList;
     }
 
 
-    public int numberOfColumns(ResultSet resultSet) throws SQLException {
+    int numberOfColumns(ResultSet resultSet) throws SQLException {
         ResultSetMetaData metaData = resultSet.getMetaData();
         return metaData.getColumnCount();
     }

@@ -9,7 +9,7 @@ import java.sql.Statement;
 
 public class ConnectionToDb {
 
-    public  Connection getConnection() throws SQLException {
+    public Connection getConnection() throws SQLException {
         MysqlDataSource ds = new MysqlDataSource();
         ds.setServerName("localhost");
         ds.setPortNumber(3305);
@@ -18,12 +18,12 @@ public class ConnectionToDb {
         ds.setPassword("123456");
 
         Connection conn = null;
-         conn = ds.getConnection();
-            return conn;
-
+        conn = ds.getConnection();
+        return conn;
     }
+
     public void close(Connection connection) throws SQLException {
-        if(connection!= null){
+        if (connection != null) {
             connection.close();
         }
     }
