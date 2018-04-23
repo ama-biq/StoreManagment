@@ -48,14 +48,18 @@ public class GroupMallDefinition {
         return mallGrpList;
     }
 
-    public int getAllMallGrp(Connection connection) throws SQLException {
-        int column = 0;
+    public Set<Integer> getAllMallGrp(Connection connection) throws SQLException {
+        Set<Integer>setMallGroups = new HashSet<>();
         PreparedStatement preparedStatement = connection.prepareStatement(getAllGroupMall);
         ResultSet rs = preparedStatement.executeQuery();
-        if (rs.next()) {
-            column = rs.getInt(1);
+        while(rs.next()) {
+            int i = 1;
+            while (i <= numberOfColumns(rs)) {
+                setMallGroups.add(rs.getInt(1));
+                i = i + 5;
+            }
         }
-        return column;
+        return setMallGroups;
     }
     public int deleteMallGrp(Connection connection) throws SQLException {
         int status =0;

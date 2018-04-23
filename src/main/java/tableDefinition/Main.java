@@ -44,7 +44,7 @@ public class Main {
                             menu.presentAllEmployeesInChain(connection);
                             break;
                         case 7:
-                            //Present all details of a Shop
+                            menu.presentAllDetailsOfShop(connection);
                             break;
                         case 8:
                             return;
