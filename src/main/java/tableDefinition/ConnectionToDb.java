@@ -12,10 +12,10 @@ public class ConnectionToDb {
     public Connection getConnection() throws SQLException {
         MysqlDataSource ds = new MysqlDataSource();
         ds.setServerName("localhost");
-        ds.setPortNumber(3306);
+        ds.setPortNumber(3305);
         ds.setDatabaseName("my_new_schema");
         ds.setUser("root");
-        ds.setPassword("Aa123456");
+        ds.setPassword("123456");
 
         Connection conn = null;
         conn = ds.getConnection();

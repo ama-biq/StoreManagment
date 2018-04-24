@@ -21,8 +21,8 @@ public class PrepareDbClass {
     private static final String INSERTCHAIN_1 = "INSERT INTO chain  VALUES (31, \"Adidas\")";
     private static final String INSERTCHAIN = "INSERT INTO chain  VALUES (21, \"Sport wear\");\n";
 
-    private static final String INSERT_SHOP = "INSERT INTO shop VALUES (79,\"Tel-Aviv\", 21, 555, 7);";
-    private static final String INSERT_SHOP_1 = "INSERT INTO shop VALUES (89,\"Petach-Tikva\", 31, 888, 3)";
+    private static final String INSERT_SHOP = "INSERT INTO shop VALUES (79,\"null\", 21, 555, 7);";
+    private static final String INSERT_SHOP_1 = "INSERT INTO shop VALUES (89,\"null\", 31, 888, 3)";
     private static final String INSERT_EMPLOYEE = "INSERT INTO employee  VALUES (1977, 79, 21)";
     private static final String INSERT_EMPLOYEE_1 = "INSERT INTO employee  VALUES (1988, 89, 31 )";
 

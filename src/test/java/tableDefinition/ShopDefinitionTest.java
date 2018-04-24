@@ -70,10 +70,11 @@ class ShopDefinitionTest {
     @Test
     public void passPresentAllDetailsOfAShop() throws SQLException {
 
-        ShopDefinition shopDefinition = new ShopDefinition(79, 21, 555, 7, "Tel-Aviv");
-        ShopDefinition actual = shopDefinition.presentAllDetailsOfAShop(79, connection);
+        ShopDefinition shopDefinition = new ShopDefinition(79, 21, 555, 7, null);
+        ShopDefinition shopDefinition1 = new ShopDefinition();
+        ShopDefinition actual = shopDefinition1.presentAllDetailsOfAShop(79, connection);
 
-        assertEquals(shopDefinition, actual);
+        assertEquals(shopDefinition.toString(), actual.toString());
     }
 
 }

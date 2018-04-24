@@ -25,13 +25,6 @@ public class ShopDefinition {
         this.mallShopId = mallShopId;
     }
 
-    ShopDefinition(int shopId, int chainId, int mallId, int mallShopId, String address) {
-        this.shopId = shopId;
-        this.chainId = chainId;
-        this.mallId = mallId;
-        this.mallShopId = mallShopId;
-        this.address = address;
-    }
 
     ShopDefinition(int shopId, int chainId, String address) {
         this.shopId = shopId;
@@ -41,6 +34,14 @@ public class ShopDefinition {
 
     ShopDefinition() {
 
+    }
+
+    ShopDefinition(int shopId, int chainId, int mallId, int mallShopId, String address) {
+        this.shopId = shopId;
+        this.chainId = chainId;
+        this.mallId = mallId;
+        this.mallShopId = mallShopId;
+        this.address = address;
     }
 
     int createShop(Connection connection) throws SQLException {
@@ -139,13 +140,6 @@ public class ShopDefinition {
                 '}';
     }
 
-//    @Override
-//    public boolean equals(Object o) {
-//        if (this == o) return true;
-//        if (o == null || getClass() != o.getClass()) return false;
-//        ShopDefinition that = (ShopDefinition) o;
-//        return shopId == that.shopId;
-//    }
 
 
     @Override
