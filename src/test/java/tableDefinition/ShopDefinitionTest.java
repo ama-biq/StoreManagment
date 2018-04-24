@@ -66,4 +66,14 @@ class ShopDefinitionTest {
 
         assertEquals(4, actual.size() );
     }
+
+    @Test
+    public void passPresentAllDetailsOfAShop() throws SQLException {
+
+        ShopDefinition shopDefinition = new ShopDefinition(79, 21, 555, 7, "Tel-Aviv");
+        ShopDefinition actual = shopDefinition.presentAllDetailsOfAShop(79, connection);
+
+        assertEquals(shopDefinition, actual);
+    }
+
 }

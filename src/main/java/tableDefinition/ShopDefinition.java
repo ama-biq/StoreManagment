@@ -1,10 +1,7 @@
 package tableDefinition;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class ShopDefinition {
 
@@ -26,6 +23,14 @@ public class ShopDefinition {
         this.chainId = chainId;
         this.mallId = mallId;
         this.mallShopId = mallShopId;
+    }
+
+    ShopDefinition(int shopId, int chainId, int mallId, int mallShopId, String address) {
+        this.shopId = shopId;
+        this.chainId = chainId;
+        this.mallId = mallId;
+        this.mallShopId = mallShopId;
+        this.address = address;
     }
 
     ShopDefinition(int shopId, int chainId, String address) {
@@ -134,13 +139,27 @@ public class ShopDefinition {
                 '}';
     }
 
+//    @Override
+//    public boolean equals(Object o) {
+//        if (this == o) return true;
+//        if (o == null || getClass() != o.getClass()) return false;
+//        ShopDefinition that = (ShopDefinition) o;
+//        return shopId == that.shopId;
+//    }
+
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ShopDefinition that = (ShopDefinition) o;
-        return shopId == that.shopId;
+        return shopId == that.shopId &&
+                chainId == that.chainId &&
+                mallId == that.mallId &&
+                mallShopId == that.mallShopId &&
+                Objects.equals(address, that.address);
     }
+
 
     public ShopDefinition presentAllDetailsOfAShop(int shopId, Connection connection) throws SQLException {
         ShopDefinition retValShop = new ShopDefinition();
