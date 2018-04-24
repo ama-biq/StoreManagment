@@ -58,6 +58,7 @@ public class GroupMallDefinition {
                 i = i + 5;
             }
         }
+         setMallGroups.remove(0);
         return setMallGroups;
     }
 

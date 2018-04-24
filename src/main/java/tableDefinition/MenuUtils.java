@@ -95,18 +95,21 @@ public class MenuUtils {
         ChainDefinition chainDefinition = new ChainDefinition();
         MallDefinition mallDefinition = new MallDefinition();
         ShopDefinition shopDefinition = new ShopDefinition();
+        int shopId;
         Set<Integer> storesList = shopDefinition.getExistedShops(connection);
         Scanner scShop = new Scanner(System.in);
         System.out.println("Is shop belong to mall? (yes / no )");
         String answer = scShop.next();
-        System.out.println("Insert new store id, existing stores are : " + storesList.toString());
-        int shopId = scShop.nextInt();
 
-        Set<Integer> chainsList = chainDefinition.getExistedChains(connection);
-        System.out.println("Insert chain id from available list, available chains are : " + chainsList.toString());
-        int chainIdForShop = scShop.nextInt();
 
         if (answer.equalsIgnoreCase("yes") || answer.equalsIgnoreCase("y")) {
+            System.out.println("Insert new store id, existing stores are : " + storesList.toString());
+            shopId = scShop.nextInt();
+
+            Set<Integer> chainsList = chainDefinition.getExistedChains(connection);
+            System.out.println("Insert chain id from available list, available chains are : " + chainsList.toString());
+            int chainIdForShop = scShop.nextInt();
+
             Set<Integer> mallList = mallDefinition.getExistedMall(connection);
             System.out.println("Insert Mall id from available list, available malls are: " + mallList.toString());
             int mallId = scShop.nextInt();
@@ -114,9 +117,20 @@ public class MenuUtils {
             int mallShopId = scShop.nextInt();
             shopDefinition = new ShopDefinition(shopId, chainIdForShop, mallId, mallShopId);
         } else if (answer.equalsIgnoreCase("no") || answer.equalsIgnoreCase("n")) {
+            System.out.println("Insert new store id, existing stores are : " + storesList.toString());
+            shopId = scShop.nextInt();
+
+            Set<Integer> chainsList = chainDefinition.getExistedChains(connection);
+            System.out.println("Insert chain id from available list, available chains are : " + chainsList.toString());
+            int chainIdForShop = scShop.nextInt();
+
             System.out.println("Insert address (should be String): ");
             String address = scShop.next();
             shopDefinition = new ShopDefinition(shopId, chainIdForShop, address);
+        }else {
+            System.out.println("Available options yes or no.");
+            System.out.println("-----------------------------");
+            return;
         }
         try {
             shopDefinition.createShop(connection);
@@ -130,7 +144,6 @@ public class MenuUtils {
 
     void addNewChain(Connection connection) throws SQLException {
         // Create new chain.
-        //todo enter string as int and it works fine.
         Scanner scChain = new Scanner(System.in);
         ChainDefinition chainDefinition = new ChainDefinition();
         Set<Integer> chainsList = chainDefinition.getExistedChains(connection);
@@ -181,15 +194,14 @@ public class MenuUtils {
         System.out.println("Insert desired store id from list, available stores are : " + shopSet.toString());
         int shopId = scShop.nextInt();
 
-                try {
-        ShopDefinition shopDetails = shopDefinition.presentAllDetailsOfAShop(shopId, connection);
-        System.out.println(shopDetails.toString());
-
-
-        } catch (Exception e) {
-            //todo to change confusing message
-            System.out.println("Shop with id: " + shopId + " already exists.");
+            ShopDefinition shopDetails = new ShopDefinition();
+         shopDetails = shopDefinition.presentAllDetailsOfAShop(shopId, connection);
+        if (shopDetails!=null){
+            System.out.println(shopDetails.toString());
+        }else {
+            System.out.println("Shop with inserted Id not exists.");
         }
+
         System.out.println("--------------------------------------------------");
 
     }

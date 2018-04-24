@@ -161,6 +161,9 @@ public class ShopDefinition {
             System.out.print(e.getMessage());
         }
 
+        if(list.isEmpty()){
+            return null;
+        }
         retValShop.shopId = (int) list.get(0);
         retValShop.address = (String) list.get(1);
         retValShop.chainId = (int) list.get(2);

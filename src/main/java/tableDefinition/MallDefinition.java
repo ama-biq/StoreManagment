@@ -67,6 +67,7 @@ public class MallDefinition {
                 i = i + 3;
             }
         }
+         mallList.remove(0);
         return mallList;
     }
 
