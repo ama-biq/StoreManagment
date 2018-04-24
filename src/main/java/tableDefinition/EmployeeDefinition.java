@@ -62,13 +62,12 @@ public class EmployeeDefinition {
         PreparedStatement preparedStatement = connection.prepareStatement(GET_EMPLOYEE_BY_CHAIN_ID);
         preparedStatement.setInt(1, specificChain);
         ResultSet rs = preparedStatement.executeQuery();
-        ResultSet rsCopy = rs;
         while (rs.next()) {
             int i = 1;
             //in while loop we run on the first column and insert its value to arraylist
             //the values are the employee id
             // i+3 - because there are 3 columns in table
-            while (i <= numberOfColumns(rsCopy)) {
+            while (i <= numberOfColumns(rs)) {
                 columnArrayList.add(rs.getInt(1));
                 i = i + 3;
             }

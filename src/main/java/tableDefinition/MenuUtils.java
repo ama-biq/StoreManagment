@@ -127,7 +127,7 @@ public class MenuUtils {
             System.out.println("Insert address (should be String): ");
             String address = scShop.next();
             shopDefinition = new ShopDefinition(shopId, chainIdForShop, address);
-        }else {
+        } else {
             System.out.println("Available options yes or no.");
             System.out.println("-----------------------------");
             return;
@@ -194,11 +194,11 @@ public class MenuUtils {
         System.out.println("Insert desired store id from list, available stores are : " + shopSet.toString());
         int shopId = scShop.nextInt();
 
-            ShopDefinition shopDetails = new ShopDefinition();
-         shopDetails = shopDefinition.presentAllDetailsOfAShop(shopId, connection);
-        if (shopDetails!=null){
+        ShopDefinition shopDetails = new ShopDefinition();
+        shopDetails = shopDefinition.presentAllDetailsOfAShop(shopId, connection);
+        if (shopDetails != null) {
             System.out.println(shopDetails.toString());
-        }else {
+        } else {
             System.out.println("Shop with inserted Id not exists.");
         }
 

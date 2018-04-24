@@ -1,13 +1,7 @@
 package tableDefinition;
 
-import javax.swing.plaf.synth.SynthOptionPaneUI;
-import javax.swing.text.DefaultEditorKit;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
-import java.util.Set;
 
 public class Main {
 
@@ -58,7 +52,7 @@ public class Main {
                 }
             } while (choice != 8);
 
-        }finally {
+        } finally {
             connObject.close(connection);
         }
     }

@@ -1,20 +1,18 @@
 package tableDefinition;
 
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.omg.CORBA.PUBLIC_MEMBER;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class EmployeeDefinitionTest {
 
-    ChainDefinition emptyDefinition = new ChainDefinition();
     ConnectionToDb connObject = new ConnectionToDb();
     Connection connection = connObject.getConnection();
     PrepareDbClass prepareDbClass = new PrepareDbClass();
@@ -30,7 +28,7 @@ class EmployeeDefinitionTest {
     @Test
     public void insertEmployee() throws SQLException {
 
-        EmployeeDefinition definitionEmployee = new EmployeeDefinition(10,79, 21);
+        EmployeeDefinition definitionEmployee = new EmployeeDefinition(10, 79, 21);
         int actual = definitionEmployee.createEmployee(connection);
         assertEquals(1, actual);
     }
@@ -38,7 +36,7 @@ class EmployeeDefinitionTest {
     @Test
     public void getSpecificEmployee() throws SQLException {
 
-        EmployeeDefinition definitionEmployee = new EmployeeDefinition(1976,89, 31);
+        EmployeeDefinition definitionEmployee = new EmployeeDefinition(1976, 89, 31);
         definitionEmployee.createEmployee(connection);
         int actual = definitionEmployee.getSpecificEmployee(connection, 1976);
         assertEquals(1976, actual);
@@ -52,6 +50,7 @@ class EmployeeDefinitionTest {
         List<Integer> actual = definitionEmployeesInChain.getAllEmployeeInChain(connection, 21);
         assertTrue(expected.equals(actual));
     }
+
     @Test
     public void deleteEmployee() throws SQLException {
         EmployeeDefinition definitionEmployee = new EmployeeDefinition();

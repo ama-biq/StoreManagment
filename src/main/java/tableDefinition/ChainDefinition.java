@@ -8,7 +8,6 @@ public class ChainDefinition {
 
     private int chainId;
     private String category;
-    private ConnectionToDb connObject = new ConnectionToDb();
 
     private static final String GET_CHAIN_BY_ID = "SELECT * from chain WHERE Chain_Id = ?";
     private static final String DELETE_CHAIN_BY_ID = "delete from chain where Chain_Id=?";
@@ -56,13 +55,12 @@ public class ChainDefinition {
         Set<Integer> chainsList = new HashSet<>();
         PreparedStatement preparedStatement = connection.prepareStatement(GET_ALL_CHAINS);
         ResultSet rs = preparedStatement.executeQuery();
-        ResultSet rsCopy = rs;
         while (rs.next()) {
             int i = 1;
             //in while loop we run on the first column and insert its value to arraylist
             //the values are the employee id
             // i+3 - because there are 3 columns in table
-            while (i <= numberOfColumns(rsCopy)) {
+            while (i <= numberOfColumns(rs)) {
                 chainsList.add(rs.getInt(1));
                 i = i + 3;
             }

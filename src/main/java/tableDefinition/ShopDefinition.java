@@ -83,13 +83,12 @@ public class ShopDefinition {
         PreparedStatement preparedStatement = connection.prepareStatement(GET_ALL_SHOPS_BY_MALL);
         preparedStatement.setInt(1, specificMall);
         ResultSet rs = preparedStatement.executeQuery();
-        ResultSet rsCopy = rs;
         while (rs.next()) {
             int i = 1;
             //in while loop we run on the first column and insert its value to arraylist
             //the values are the employee id
             // i+5 - because there are 5 columns in shop table
-            while (i <= numberOfColumns(rsCopy)) {
+            while (i <= numberOfColumns(rs)) {
                 columnArrayList.add(rs.getInt(1));
                 i = i + 5;
             }
@@ -104,13 +103,13 @@ public class ShopDefinition {
 
     public Set<Integer> getAllShopsInSpecificMallGroup(Connection connection, int groupMallId) throws SQLException {
         Set<Integer> shops = new HashSet<>();
-            PreparedStatement preparedStatement = connection.prepareStatement(GET_ALL_SHOPS_FROM_MALL_GROUP);
-            preparedStatement.setInt(1,groupMallId);
-            ResultSet rs = preparedStatement.executeQuery();
-            while (rs.next()) {
-                shops.add(rs.getInt(1));
-            }
-            rs.close();
+        PreparedStatement preparedStatement = connection.prepareStatement(GET_ALL_SHOPS_FROM_MALL_GROUP);
+        preparedStatement.setInt(1, groupMallId);
+        ResultSet rs = preparedStatement.executeQuery();
+        while (rs.next()) {
+            shops.add(rs.getInt(1));
+        }
+        rs.close();
         return shops;
     }
 
@@ -118,10 +117,9 @@ public class ShopDefinition {
         Set<Integer> shopsList = new HashSet<>();
         PreparedStatement preparedStatement = connection.prepareStatement(GET_ALL_SHOPS);
         ResultSet rs = preparedStatement.executeQuery();
-        ResultSet rsCopy = rs;
         while (rs.next()) {
             int i = 1;
-            while (i <= numberOfColumns(rsCopy)) {
+            while (i <= numberOfColumns(rs)) {
                 shopsList.add(rs.getInt(1));
                 i = i + 5;
             }
@@ -141,7 +139,6 @@ public class ShopDefinition {
     }
 
 
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -154,18 +151,27 @@ public class ShopDefinition {
                 Objects.equals(address, that.address);
     }
 
+    @Override
+    public int hashCode() {
+        int result = shopId;
+        result = 31 * result + chainId;
+        result = 31 * result + mallId;
+        result = 31 * result + mallShopId;
+        result = 31 * result + address.hashCode();
+        return result;
+    }
 
-    public ShopDefinition presentAllDetailsOfAShop(int shopId, Connection connection) throws SQLException {
+    ShopDefinition presentAllDetailsOfAShop(int shopId, Connection connection) throws SQLException {
         ShopDefinition retValShop = new ShopDefinition();
         List<Object> list = new ArrayList<>();
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(GET_SHOP_BY_ID);
-            preparedStatement.setInt(1,shopId);
+            preparedStatement.setInt(1, shopId);
             ResultSet rs = preparedStatement.executeQuery();
             ResultSetMetaData metadata = rs.getMetaData();
             int cols = metadata.getColumnCount();
             while (rs.next()) {
-                for(int i=1; i<=cols; ++i) {
+                for (int i = 1; i <= cols; ++i) {
                     list.add(rs.getObject(i));
                 }
             }
@@ -174,7 +180,7 @@ public class ShopDefinition {
             System.out.print(e.getMessage());
         }
 
-        if(list.isEmpty()){
+        if (list.isEmpty()) {
             return null;
         }
         retValShop.shopId = (int) list.get(0);
