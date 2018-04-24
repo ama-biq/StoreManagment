@@ -11,6 +11,7 @@ import java.util.Set;
 public class MenuUtils {
 
     void presentAllShopsInMallGroup(Connection connection) throws SQLException {
+        //todo wrong input exception
         GroupMallDefinition groupMallDefinition = new GroupMallDefinition();
         ShopDefinition shopDefinition = new ShopDefinition();
         Set<Integer> setMallGroups = groupMallDefinition.getAllMallGrp(connection);
@@ -80,8 +81,10 @@ public class MenuUtils {
 
         EmployeeDefinition employee = new EmployeeDefinition(employeeId, shopIdForNewEmployee, chainIdForNewEmployee);
         try {
+            employee.createEmployee(connection);
             System.out.println("The ID of created Employee is: " + employee.getSpecificEmployee(connection, employeeId));
         } catch (MySQLIntegrityConstraintViolationException e) {
+            //todo to change confusing message
             System.out.println("Employee with id: " + employeeId + " already exists.");
         }
         System.out.println("--------------------------------------------------");
@@ -116,8 +119,10 @@ public class MenuUtils {
             shopDefinition = new ShopDefinition(shopId, chainIdForShop, address);
         }
         try {
+            shopDefinition.createShop(connection);
             System.out.println("The ID of created Shop is: " + shopDefinition.getSpecificShop(connection, shopId));
         } catch (MySQLIntegrityConstraintViolationException e) {
+            //todo to change message, its confusing
             System.out.println("Shop with id: " + shopId + " already exists.");
         }
         System.out.println("--------------------------------------------------");
@@ -125,6 +130,7 @@ public class MenuUtils {
 
     void addNewChain(Connection connection) throws SQLException {
         // Create new chain.
+        //todo enter string as int and it works fine.
         Scanner scChain = new Scanner(System.in);
         ChainDefinition chainDefinition = new ChainDefinition();
         Set<Integer> chainsList = chainDefinition.getExistedChains(connection);
@@ -136,11 +142,12 @@ public class MenuUtils {
 
         chainDefinition = new ChainDefinition(chainId, chainCategory);
         try {
+            chainDefinition.createChain(connection);
             System.out.println("Chain created with id: " + chainDefinition.getSpecificChain(connection, chainId));
-            System.out.println("--------------------------------------------------");
         } catch (MySQLIntegrityConstraintViolationException e) {
             System.out.println("Chain with id: " + chainId + " already exists.");
         }
+        System.out.println("--------------------------------------------------");
     }
 
     int getChoice() {
@@ -173,8 +180,17 @@ public class MenuUtils {
         Scanner scShop = new Scanner(System.in);
         System.out.println("Insert desired store id from list, available stores are : " + shopSet.toString());
         int shopId = scShop.nextInt();
+
+                try {
         ShopDefinition shopDetails = shopDefinition.presentAllDetailsOfAShop(shopId, connection);
         System.out.println(shopDetails.toString());
+
+
+        } catch (Exception e) {
+            //todo to change confusing message
+            System.out.println("Shop with id: " + shopId + " already exists.");
+        }
+        System.out.println("--------------------------------------------------");
 
     }
 }

@@ -62,7 +62,7 @@ public class ShopDefinition {
     }
 
     int getSpecificShop(Connection connection, int specificShop) throws SQLException {
-        int column = 0;
+        int column = -1;
         PreparedStatement preparedStatement = connection.prepareStatement(GET_SHOP_BY_ID);
         preparedStatement.setInt(1, specificShop);
         ResultSet rs = preparedStatement.executeQuery();
@@ -125,7 +125,7 @@ public class ShopDefinition {
 
     @Override
     public String toString() {
-        return "The details of Shop are {" +
+        return "The details of the Shop are {" +
                 "shopId=" + shopId +
                 ", chainId=" + chainId +
                 ", mallId=" + mallId +
@@ -157,7 +157,6 @@ public class ShopDefinition {
                 }
             }
             rs.close();
-            connection.close();
         } catch (SQLException e) {
             System.out.print(e.getMessage());
         }

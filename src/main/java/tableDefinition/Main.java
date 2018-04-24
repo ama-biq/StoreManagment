@@ -53,6 +53,7 @@ public class Main {
                             return;
                         default:
                             System.out.println("Wrong choice, please choose again");
+                            System.out.println("------------------------------------");
                     }
                 }
             } while (choice != 8);
